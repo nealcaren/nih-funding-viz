@@ -1,8 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import Papa from 'papaparse';
 import { ArrowUpDown } from "lucide-react";
-import _ from 'lodash';
 import type { ReactElement } from 'react';
 
 
