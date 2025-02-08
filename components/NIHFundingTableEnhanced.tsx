@@ -13,12 +13,12 @@ interface Organization {
   directCost: number;
   indirectCost: number;
   cappedIndirectCost: number;
-  lostIndirect: number;
+  threatenedIndirect: number;
 }
 
 export default function NIHFundingTableEnhanced(): ReactElement {
   const [data, setData] = useState<Organization[]>([]);
-  const [sortConfig, setSortConfig] = useState({ key: 'lostIndirect', direction: 'desc' });
+  const [sortConfig, setSortConfig] = useState({ key: 'threatenedIndirect', direction: 'desc' });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -91,7 +91,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
         <h2 className="text-lg font-semibold">NIH Funding Analysis (Aggregated by Organization)</h2>
         <div className="text-sm text-gray-600 space-y-1">
           <p>Showing {getSortedData().length} organizations from {data.length} total</p>
-          <p>Total Threatened Indirect for visible rows: {formatCurrency(getSortedData().reduce((sum, row) => sum + row.lostIndirect, 0))}</p>
+          <p>Total Threatened Indirect for visible rows: {formatCurrency(getSortedData().reduce((sum, row) => sum + row.threatenedIndirect, 0))}</p>
         </div>
         <input
           type="text"
@@ -136,7 +136,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
               </th>
               <th 
                 className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => sortData('lostIndirect')}
+                onClick={() => sortData('threatenedIndirect')}
               >
                 Threatened Indirect 
                 <ArrowUpDown className="inline h-4 w-4 ml-2"/>
@@ -175,7 +175,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
                   {formatCurrency(row.cappedIndirectCost)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-medium">
-                  {formatCurrency(row.lostIndirect)}
+                  {formatCurrency(row.threatenedIndirect)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {row.state}
