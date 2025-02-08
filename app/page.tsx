@@ -4,7 +4,7 @@ import NIHFundingTableEnhanced from '@/components/NIHFundingTableEnhanced'
 export default function Home() {
   return (
     <main className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-2">Impact of NIH Indirect Cost Cap Proposal</h1>
+      <h1 className="text-3xl font-bold mb-2">Estimated Impact of NIH Indirect Cost Cap Proposal</h1>
       <div className="text-gray-600 mb-8 space-y-4">
         <p>
           This analysis estimates the impact on research organizations of a proposed 15% cap on indirect costs. 
