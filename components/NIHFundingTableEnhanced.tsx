@@ -5,18 +5,6 @@ import { ArrowUpDown } from "lucide-react";
 import _ from 'lodash';
 import type { ReactElement } from 'react';
 
-interface Grant {
-  id: number;
-  organizationName: string;
-  state: string;
-  city: string;
-  projectNumber: string;
-  projectTitle: string;
-  directCost: number;
-  indirectCost: number;
-  cappedIndirectCost: number;
-  lostIndirect: number;
-}
 
 interface Organization {
   organizationName: string;
@@ -30,8 +18,6 @@ interface Organization {
 
 export default function NIHFundingTableEnhanced(): ReactElement {
   const [data, setData] = useState<Organization[]>([]);
-  const [rawGrants, setRawGrants] = useState<Grant[]>([]);
-  const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
   const [sortConfig, setSortConfig] = useState({ key: 'lostIndirect', direction: 'desc' });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
@@ -55,29 +41,24 @@ export default function NIHFundingTableEnhanced(): ReactElement {
           transform: value => value.trim()
         });
 
-        // Process each row first to calculate capped costs
-        const processedRows = parsedData.data.map((row, index) => {
-          const directCost = parseFloat(row['DIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
-          const indirectCost = parseFloat(row['INDIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
-          const cappedIndirectCost = Math.min(indirectCost, directCost * 0.15);
-          const lostIndirect = Math.max(0, indirectCost - cappedIndirectCost);
+        // Process and aggregate data by organization
+        const aggregatedData = _.chain(parsedData.data)
+          .map(row => {
+            const directCost = parseFloat(row['DIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
+            const indirectCost = parseFloat(row['INDIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
+            const cappedIndirectCost = Math.min(indirectCost, directCost * 0.15);
+            const lostIndirect = Math.max(0, indirectCost - cappedIndirectCost);
 
-          return {
-            id: index,
-            organizationName: row['ORGANIZATION NAME'] || 'N/A',
-            state: row['STATE OR COUNTRY NAME'] || 'N/A',
-            city: row['CITY'] || 'N/A',
-            projectNumber: row['PROJECT NUMBER'] || 'N/A',
-            projectTitle: row['PROJECT TITLE'] || 'N/A',
-            directCost,
-            indirectCost,
-            cappedIndirectCost,
-            lostIndirect
-          };
-        });
-
-        // Aggregate by organization
-        const aggregatedData = _.chain(processedRows)
+            return {
+              organizationName: row['ORGANIZATION NAME'] || 'N/A',
+              state: row['STATE OR COUNTRY NAME'] || 'N/A',
+              city: row['CITY'] || 'N/A',
+              directCost,
+              indirectCost,
+              cappedIndirectCost,
+              lostIndirect
+            };
+          })
           .groupBy('organizationName')
           .map((group, key) => ({
             organizationName: key,
@@ -90,7 +71,6 @@ export default function NIHFundingTableEnhanced(): ReactElement {
           }))
           .value();
 
-        setRawGrants(processedRows);
         setData(aggregatedData);
       } catch (error) {
         console.error('Error loading data:', error);
@@ -222,13 +202,9 @@ export default function NIHFundingTableEnhanced(): ReactElement {
           <tbody className="bg-white divide-y divide-gray-200">
             {getSortedData().map((row, index) => (
               <tr key={index} className="hover:bg-gray-50">
-                <td 
-                  className="px-6 py-4 text-sm font-medium text-gray-900 max-w-[200px] cursor-pointer hover:text-blue-600"
-                  onClick={() => setExpandedOrg(expandedOrg === row.organizationName ? null : row.organizationName)}
-                >
+                <td className="px-6 py-4 text-sm font-medium text-gray-900 max-w-[200px]">
                   <div className="break-words">
                     {row.organizationName}
-                    {expandedOrg === row.organizationName ? ' 🔼' : ' 🔽'}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -250,42 +226,6 @@ export default function NIHFundingTableEnhanced(): ReactElement {
                   {row.city}
                 </td>
               </tr>
-              {expandedOrg === row.organizationName && (
-                <tr>
-                  <td colSpan={7} className="px-6 py-4 bg-gray-50">
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-100">
-                          <tr>
-                            <th className="px-4 py-2 text-xs font-medium text-gray-500">Project Number</th>
-                            <th className="px-4 py-2 text-xs font-medium text-gray-500">Project Title</th>
-                            <th className="px-4 py-2 text-xs font-medium text-gray-500">Direct</th>
-                            <th className="px-4 py-2 text-xs font-medium text-gray-500">Indirect</th>
-                            <th className="px-4 py-2 text-xs font-medium text-gray-500">15% Capped</th>
-                            <th className="px-4 py-2 text-xs font-medium text-gray-500">Lost</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {rawGrants
-                            .filter(grant => grant.organizationName === row.organizationName)
-                            .map((grant, grantIndex) => (
-                              <tr key={grantIndex} className="hover:bg-gray-100">
-                                <td className="px-4 py-2 text-xs">{grant.projectNumber}</td>
-                                <td className="px-4 py-2 text-xs max-w-[300px]">
-                                  <div className="break-words">{grant.projectTitle}</div>
-                                </td>
-                                <td className="px-4 py-2 text-xs">{formatCurrency(grant.directCost)}</td>
-                                <td className="px-4 py-2 text-xs">{formatCurrency(grant.indirectCost)}</td>
-                                <td className="px-4 py-2 text-xs">{formatCurrency(grant.cappedIndirectCost)}</td>
-                                <td className="px-4 py-2 text-xs text-red-600">{formatCurrency(grant.lostIndirect)}</td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
-                </tr>
-              )}
             ))}
           </tbody>
         </table>
