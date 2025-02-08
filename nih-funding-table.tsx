@@ -136,9 +136,9 @@ const NIHFundingTable = () => {
               </th>
               <th 
                 className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => sortData('lostIndirect')}
+                onClick={() => sortData('threatenedIndirect')}
               >
-                Lost Indirect Cost 
+                Threatened Indirect Cost 
                 <ArrowUpDown className="inline h-4 w-4 ml-2"/>
               </th>
             </tr>
@@ -165,7 +165,7 @@ const NIHFundingTable = () => {
                   {formatCurrency(row.cappedIndirectCost)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-medium">
-                  {formatCurrency(row.lostIndirect)}
+                  {formatCurrency(row.threatenedIndirect)}
                 </td>
               </tr>
             ))}
