@@ -27,7 +27,7 @@ interface Organization {
   lostIndirect: number;
 }
 
-const NIHFundingTableEnhanced: React.FC = () => {
+export default function NIHFundingTableEnhanced() {
   const [data, setData] = useState<Organization[]>([]);
   const [rawGrants, setRawGrants] = useState<Grant[]>([]);
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
@@ -293,4 +293,3 @@ const NIHFundingTableEnhanced: React.FC = () => {
   );
 };
 
-export default NIHFundingTableEnhanced;
