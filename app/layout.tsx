@@ -5,7 +5,11 @@ export const metadata = {
   description: 'Analysis of NIH funding data',
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" className="h-full bg-gray-50">
       <body suppressHydrationWarning={true} className="h-full">{children}</body>
