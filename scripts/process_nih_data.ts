@@ -64,4 +64,4 @@ function processData(inputFile: string, outputFile: string) {
 }
 
 // Process the data
-processData('nih_2024.csv', 'public/processed_nih_2024.json');
+processData('data/nih_2024.csv', 'public/processed_nih_2024.json');
