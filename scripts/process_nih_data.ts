@@ -61,7 +61,7 @@ function processData(inputFile: string, outputFile: string) {
       org.directCost !== 0 || 
       org.indirectCost !== 0 || 
       org.cappedIndirectCost !== 0 || 
-      org.lostIndirect !== 0
+      org.threatenedIndirect !== 0
     )
     .value();
 
