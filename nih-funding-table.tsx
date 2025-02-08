@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
+
+interface Organization {
+  organizationName: string;
+  state: string;
+  city: string;
+  directCost: number;
+  indirectCost: number;
+  cappedIndirectCost: number;
+  threatenedIndirect: number;
+}
 import Papa from 'papaparse';
 import { ArrowUpDown } from "lucide-react";
 import _ from 'lodash';
 
 const NIHFundingTable = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Organization[]>([]);
   const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: 'asc' | 'desc' }>({ key: null, direction: 'asc' });
   const [searchTerm, setSearchTerm] = useState('');
 
