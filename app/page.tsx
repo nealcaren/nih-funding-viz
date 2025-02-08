@@ -16,7 +16,7 @@ export default function Home() {
           report.nih.gov
         </a>
       </p>
-      <NIHFundingTable />
+      <NIHFundingTableEnhanced />
     </main>
   )
 }
