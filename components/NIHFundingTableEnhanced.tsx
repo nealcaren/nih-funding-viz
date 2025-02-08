@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 const NIHFundingTable = () => {
   const [data, setData] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: 'cappedIndirectCost', direction: 'desc' });
+  const [sortConfig, setSortConfig] = useState({ key: 'lostIndirect', direction: 'desc' });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
