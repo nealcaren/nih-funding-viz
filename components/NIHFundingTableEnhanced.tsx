@@ -1,13 +1,36 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactElement } from 'react';
 import Papa from 'papaparse';
 import { ArrowUpDown } from "lucide-react";
 import _ from 'lodash';
 
-const NIHFundingTable = () => {
-  const [data, setData] = useState([]);
-  const [rawGrants, setRawGrants] = useState([]);
-  const [expandedOrg, setExpandedOrg] = useState(null);
+interface Grant {
+  id: number;
+  organizationName: string;
+  state: string;
+  city: string;
+  projectNumber: string;
+  projectTitle: string;
+  directCost: number;
+  indirectCost: number;
+  cappedIndirectCost: number;
+  lostIndirect: number;
+}
+
+interface Organization {
+  organizationName: string;
+  state: string;
+  city: string;
+  directCost: number;
+  indirectCost: number;
+  cappedIndirectCost: number;
+  lostIndirect: number;
+}
+
+const NIHFundingTable = (): ReactElement => {
+  const [data, setData] = useState<Organization[]>([]);
+  const [rawGrants, setRawGrants] = useState<Grant[]>([]);
+  const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
   const [sortConfig, setSortConfig] = useState({ key: 'lostIndirect', direction: 'desc' });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
