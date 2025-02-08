@@ -191,8 +191,8 @@ const NIHFundingTable = () => {
           <tbody className="bg-white divide-y divide-gray-200">
             {getSortedData().map((row, index) => (
               <tr key={index} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 max-w-[200px]">
-                  <div className="truncate" title={row.organizationName}>
+                <td className="px-6 py-4 text-sm font-medium text-gray-900 max-w-[200px]">
+                  <div className="break-words">
                     {row.organizationName}
                   </div>
                 </td>
