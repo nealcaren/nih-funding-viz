@@ -8,7 +8,7 @@ export async function GET() {
     const fileContent = await fs.readFile(filePath, 'utf-8');
     
     return NextResponse.json({ data: fileContent });
-  } catch (_) {
+  } catch {
     return NextResponse.json({ error: 'Failed to load data' }, { status: 500 });
   }
 }
