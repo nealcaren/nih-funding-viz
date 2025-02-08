@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, ReactElement } from 'react';
+import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { ArrowUpDown } from "lucide-react";
 import _ from 'lodash';
@@ -27,7 +27,7 @@ interface Organization {
   lostIndirect: number;
 }
 
-const NIHFundingTableEnhanced = (): ReactElement => {
+const NIHFundingTableEnhanced: React.FC = () => {
   const [data, setData] = useState<Organization[]>([]);
   const [rawGrants, setRawGrants] = useState<Grant[]>([]);
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
