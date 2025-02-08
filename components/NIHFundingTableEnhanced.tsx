@@ -16,7 +16,10 @@ interface Organization {
 
 export default function NIHFundingTableEnhanced(): ReactElement {
   const [data, setData] = useState<Organization[]>([]);
-  const [sortConfig, setSortConfig] = useState({ key: 'threatenedIndirect', direction: 'desc' });
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Organization; direction: 'asc' | 'desc' }>({ 
+    key: 'threatenedIndirect', 
+    direction: 'desc' 
+  });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
