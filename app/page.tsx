@@ -1,5 +1,5 @@
 'use client'
-import NIHFundingTable from '@/components/NIHFundingTableEnhanced'
+import { NIHFundingTableEnhanced as NIHFundingTable } from '@/components/NIHFundingTableEnhanced'
 
 export default function Home() {
   return (
