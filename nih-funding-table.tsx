@@ -15,7 +15,7 @@ import _ from 'lodash';
 
 const NIHFundingTable = () => {
   const [data, setData] = useState<Organization[]>([]);
-  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: 'asc' | 'desc' }>({ key: null, direction: 'asc' });
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Organization | null; direction: 'asc' | 'desc' }>({ key: null, direction: 'asc' });
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const NIHFundingTable = () => {
     }).format(value);
   };
 
-  const sortData = (key: string): void => {
+  const sortData = (key: keyof Organization): void => {
     setSortConfig(prevConfig => ({
       key,
       direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
@@ -59,10 +59,13 @@ const NIHFundingTable = () => {
     if (!sortConfig.key) return filteredData;
 
     return [...filteredData].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
+      const aValue = a[sortConfig.key!];
+      const bValue = b[sortConfig.key!];
+      
+      if (aValue < bValue) {
         return sortConfig.direction === 'asc' ? -1 : 1;
       }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
+      if (aValue > bValue) {
         return sortConfig.direction === 'asc' ? 1 : -1;
       }
       return 0;
