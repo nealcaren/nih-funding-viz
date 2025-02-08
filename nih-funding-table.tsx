@@ -14,11 +14,6 @@ const NIHFundingTable = () => {
         const response = await fetch('/processed_nih_2024.json');
         const data = await response.json();
         setData(data);
-          header: true,
-          skipEmptyLines: true,
-          transformHeader: header => header.trim(),
-          transform: value => value.trim()
-        });
 
       } catch (error) {
         console.error('Error loading data:', error);
