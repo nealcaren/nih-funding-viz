@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 const NIHFundingTable = () => {
   const [data, setData] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const [sortConfig, setSortConfig] = useState({ key: 'cappedIndirectCost', direction: 'desc' });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -96,7 +96,7 @@ const NIHFundingTable = () => {
       item.city.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    if (!sortConfig.key) return filteredData;
+    // Always sort the data since we have a default sort config
 
     return [...filteredData].sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
