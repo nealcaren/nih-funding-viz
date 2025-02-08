@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 const NIHFundingTable = () => {
   const [data, setData] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: 'asc' | 'desc' }>({ key: null, direction: 'asc' });
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const NIHFundingTable = () => {
     }).format(value);
   };
 
-  const sortData = (key: string) => {
+  const sortData = (key: string): void => {
     setSortConfig(prevConfig => ({
       key,
       direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
