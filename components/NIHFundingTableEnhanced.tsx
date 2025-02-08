@@ -27,51 +27,9 @@ export default function NIHFundingTableEnhanced(): ReactElement {
     const loadData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/nih_2024.csv');
-        const result = await response.json();
-        
-        if (!result.data) {
-          throw new Error('No data received');
-        }
-
-        const parsedData = Papa.parse(result.data, {
-          header: true,
-          skipEmptyLines: true,
-          transformHeader: header => header.trim(),
-          transform: value => value.trim()
-        });
-
-        // Process and aggregate data by organization
-        const aggregatedData = _.chain(parsedData.data)
-          .map(row => {
-            const directCost = parseFloat(row['DIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
-            const indirectCost = parseFloat(row['INDIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
-            const cappedIndirectCost = Math.min(indirectCost, directCost * 0.15);
-            const lostIndirect = Math.max(0, indirectCost - cappedIndirectCost);
-
-            return {
-              organizationName: row['ORGANIZATION NAME'] || 'N/A',
-              state: row['STATE OR COUNTRY NAME'] || 'N/A',
-              city: row['CITY'] || 'N/A',
-              directCost,
-              indirectCost,
-              cappedIndirectCost,
-              lostIndirect
-            };
-          })
-          .groupBy('organizationName')
-          .map((group, key) => ({
-            organizationName: key,
-            state: group[0].state,
-            city: group[0].city,
-            directCost: _.sumBy(group, 'directCost'),
-            indirectCost: _.sumBy(group, 'indirectCost'),
-            cappedIndirectCost: _.sumBy(group, 'cappedIndirectCost'),
-            lostIndirect: _.sumBy(group, 'lostIndirect')
-          }))
-          .value();
-
-        setData(aggregatedData);
+        const response = await fetch('/processed_nih_2024.json');
+        const data = await response.json();
+        setData(data);
       } catch (error) {
         console.error('Error loading data:', error);
         setError('Failed to load data');
