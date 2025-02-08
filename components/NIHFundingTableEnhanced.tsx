@@ -39,7 +39,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
     loadData();
   }, []);
 
-  const formatCurrency = (value) => {
+  const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -48,7 +48,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
     }).format(value);
   };
 
-  const sortData = (key) => {
+  const sortData = (key: keyof Organization): void => {
     setSortConfig(prevConfig => ({
       key,
       direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
