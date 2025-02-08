@@ -146,6 +146,34 @@ const NIHFundingTable = () => {
               </th>
               <th 
                 className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => sortData('directCost')}
+              >
+                Direct 
+                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => sortData('indirectCost')}
+              >
+                Indirect 
+                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => sortData('cappedIndirectCost')}
+              >
+                15% Capped Indirect 
+                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                onClick={() => sortData('lostIndirect')}
+              >
+                Lost Indirect 
+                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 onClick={() => sortData('state')}
               >
                 State/Country 
@@ -156,34 +184,6 @@ const NIHFundingTable = () => {
                 onClick={() => sortData('city')}
               >
                 City 
-                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
-              </th>
-              <th 
-                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => sortData('directCost')}
-              >
-                Direct Cost 
-                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
-              </th>
-              <th 
-                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => sortData('indirectCost')}
-              >
-                Indirect Cost 
-                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
-              </th>
-              <th 
-                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => sortData('cappedIndirectCost')}
-              >
-                Capped Indirect Cost 
-                <ArrowUpDown className="inline h-4 w-4 ml-2"/>
-              </th>
-              <th 
-                className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
-                onClick={() => sortData('lostIndirect')}
-              >
-                Lost Indirect Cost 
                 <ArrowUpDown className="inline h-4 w-4 ml-2"/>
               </th>
             </tr>
@@ -197,12 +197,6 @@ const NIHFundingTable = () => {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {row.state}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {row.city}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {formatCurrency(row.directCost)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -213,6 +207,12 @@ const NIHFundingTable = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-medium">
                   {formatCurrency(row.lostIndirect)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {row.state}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {row.city}
                 </td>
               </tr>
             ))}
