@@ -32,7 +32,7 @@ const NIHFundingTable = () => {
     }).format(value);
   };
 
-  const sortData = (key) => {
+  const sortData = (key: string) => {
     setSortConfig(prevConfig => ({
       key,
       direction: prevConfig.key === key && prevConfig.direction === 'asc' ? 'desc' : 'asc'
