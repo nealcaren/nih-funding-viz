@@ -91,7 +91,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
         <h2 className="text-lg font-semibold">NIH Funding Analysis (Aggregated by Organization)</h2>
         <div className="text-sm text-gray-600 space-y-1">
           <p>Showing {getSortedData().length} organizations from {data.length} total</p>
-          <p>Total Lost Indirect for visible rows: {formatCurrency(getSortedData().reduce((sum, row) => sum + row.lostIndirect, 0))}</p>
+          <p>Total Threatened Indirect for visible rows: {formatCurrency(getSortedData().reduce((sum, row) => sum + row.lostIndirect, 0))}</p>
         </div>
         <input
           type="text"
@@ -138,7 +138,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
                 className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
                 onClick={() => sortData('lostIndirect')}
               >
-                Lost Indirect 
+                Threatened Indirect 
                 <ArrowUpDown className="inline h-4 w-4 ml-2"/>
               </th>
               <th 

@@ -17,7 +17,7 @@ interface ProcessedOrg {
   directCost: number;
   indirectCost: number;
   cappedIndirectCost: number;
-  lostIndirect: number;
+  threatenedIndirect: number;
 }
 
 function processData(inputFile: string, outputFile: string) {
@@ -35,7 +35,7 @@ function processData(inputFile: string, outputFile: string) {
       const directCost = parseFloat(row['DIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
       const indirectCost = parseFloat(row['INDIRECT COST']?.replace(/[^0-9.-]+/g, '')) || 0;
       const cappedIndirectCost = Math.min(indirectCost, directCost * 0.15);
-      const lostIndirect = Math.max(0, indirectCost - cappedIndirectCost);
+      const threatenedIndirect = Math.max(0, indirectCost - cappedIndirectCost);
 
       return {
         organizationName: row['ORGANIZATION NAME'] || 'N/A',
@@ -44,7 +44,7 @@ function processData(inputFile: string, outputFile: string) {
         directCost,
         indirectCost,
         cappedIndirectCost,
-        lostIndirect
+        threatenedIndirect
       };
     })
     .groupBy('organizationName')
@@ -55,7 +55,7 @@ function processData(inputFile: string, outputFile: string) {
       directCost: _.sumBy(group, 'directCost'),
       indirectCost: _.sumBy(group, 'indirectCost'),
       cappedIndirectCost: _.sumBy(group, 'cappedIndirectCost'),
-      lostIndirect: _.sumBy(group, 'lostIndirect')
+      threatenedIndirect: _.sumBy(group, 'threatenedIndirect')
     }))
     .filter(org => 
       org.directCost !== 0 || 
