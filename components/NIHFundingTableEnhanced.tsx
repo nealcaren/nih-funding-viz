@@ -19,7 +19,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
   const [sortConfig, setSortConfig] = useState({ key: 'threatenedIndirect', direction: 'desc' });
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
