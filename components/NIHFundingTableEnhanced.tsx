@@ -121,9 +121,10 @@ const NIHFundingTable = () => {
     <div className="p-4 space-y-4">
       <div className="flex flex-col space-y-2">
         <h2 className="text-lg font-semibold">NIH Funding Analysis (Aggregated by Organization)</h2>
-        <p className="text-sm text-gray-600">
-          Showing {getSortedData().length} organizations from {data.length} total
-        </p>
+        <div className="text-sm text-gray-600 space-y-1">
+          <p>Showing {getSortedData().length} organizations from {data.length} total</p>
+          <p>Total Lost Indirect for visible rows: {formatCurrency(getSortedData().reduce((sum, row) => sum + row.lostIndirect, 0))}</p>
+        </div>
         <input
           type="text"
           placeholder="Search organizations, states, or cities..."
