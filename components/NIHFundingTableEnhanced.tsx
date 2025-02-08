@@ -27,7 +27,7 @@ export default function NIHFundingTableEnhanced(): ReactElement {
     const loadData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/nih-data');
+        const response = await fetch('/nih_2024.csv');
         const result = await response.json();
         
         if (!result.data) {
