@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { ArrowUpDown } from "lucide-react";
 import _ from 'lodash';
+import type { ReactElement } from 'react';
 
 interface Grant {
   id: number;
@@ -27,7 +28,7 @@ interface Organization {
   lostIndirect: number;
 }
 
-export default function NIHFundingTableEnhanced() {
+export default function NIHFundingTableEnhanced(): ReactElement {
   const [data, setData] = useState<Organization[]>([]);
   const [rawGrants, setRawGrants] = useState<Grant[]>([]);
   const [expandedOrg, setExpandedOrg] = useState<string | null>(null);
