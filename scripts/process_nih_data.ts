@@ -57,6 +57,12 @@ function processData(inputFile: string, outputFile: string) {
       cappedIndirectCost: _.sumBy(group, 'cappedIndirectCost'),
       lostIndirect: _.sumBy(group, 'lostIndirect')
     }))
+    .filter(org => 
+      org.directCost !== 0 || 
+      org.indirectCost !== 0 || 
+      org.cappedIndirectCost !== 0 || 
+      org.lostIndirect !== 0
+    )
     .value();
 
   fs.writeFileSync(outputFile, JSON.stringify(aggregatedData, null, 2));
