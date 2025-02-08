@@ -1,3 +1,5 @@
+import './globals.css'
+
 export const metadata = {
   title: 'NIH Funding Analysis',
   description: 'Analysis of NIH funding data',
@@ -5,8 +7,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning={true}>{children}</body>
+    <html lang="en" className="h-full bg-gray-50">
+      <body suppressHydrationWarning={true} className="h-full">{children}</body>
     </html>
   )
 }
